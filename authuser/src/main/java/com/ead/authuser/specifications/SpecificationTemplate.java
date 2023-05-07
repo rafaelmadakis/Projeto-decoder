@@ -1,6 +1,9 @@
 package com.ead.authuser.specifications;
 
+import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
+import jakarta.persistence.criteria.Join;
+import java.util.UUID;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
@@ -16,8 +19,16 @@ public class SpecificationTemplate {
       @Spec(path = "email", spec = Like.class),
       @Spec(path = "username", spec = Like.class),
       @Spec(path = "cpf", spec = Like.class),
-      @Spec(path = "fullName", spec = LikeIgnoreCase.class)
+      @Spec(path = "fullName", spec = Like.class)
   })
   public interface UserSpec extends Specification<UserModel> {}
+
+  public static Specification<UserModel> userCourseId(final UUID courseId) {
+    return (root, query, cb) -> {
+      query.distinct(true);
+      Join<UserModel, UserCourseModel> userProd = root.join("usersCourses");
+      return cb.equal(userProd.get("courseId"), courseId);
+    };
+  }
 }
 

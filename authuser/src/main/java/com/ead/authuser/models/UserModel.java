@@ -7,17 +7,21 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
@@ -71,5 +75,14 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
   @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
   @Column(nullable = false)
   private LocalDateTime lastUpdateDate;
+
+  @JsonProperty(access = Access.WRITE_ONLY)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private Set<UserCourseModel> usersCourses;
+
+
+  public UserCourseModel convertToUserCourseModel(UUID courseId) {
+    return new UserCourseModel(null, courseId, this);
+  }
 
 }
