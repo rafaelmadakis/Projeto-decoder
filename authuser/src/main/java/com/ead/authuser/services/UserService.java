@@ -14,7 +14,7 @@ public interface UserService {
 
   Optional<UserModel> findById(UUID userId);
 
-  void delete(UserModel userModel);
+//  void delete(UserModel userModel);
 
   void save(UserModel userModel);
 
