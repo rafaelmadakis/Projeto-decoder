@@ -11,7 +11,6 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.log4j.Log4j2;
-import org.apache.coyote.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,9 +99,13 @@ public class CourseController {
       Pageable pageable,
       @RequestParam(required = false) UUID userId) {
 
-    return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
+    if (userId != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(courseService
+          .findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable));
+    } else {
+      return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
-
+  }
 
 
   @GetMapping("/{courseId}")

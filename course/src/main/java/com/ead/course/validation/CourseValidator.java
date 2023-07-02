@@ -1,6 +1,10 @@
 package com.ead.course.validation;
 
 import com.ead.course.dtos.CourseDto;
+import com.ead.course.enums.UserType;
+import com.ead.course.models.UserModel;
+import com.ead.course.services.UserService;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +18,9 @@ public class CourseValidator implements Validator {
   @Autowired
   @Qualifier("defaultValidator")
   private Validator validator;
+
+  @Autowired
+  private UserService userService;
 
   @Override
   public boolean supports(Class<?> clazz) {
@@ -31,6 +38,15 @@ public class CourseValidator implements Validator {
   }
 
   private void validateUserInstructor(UUID userInstructor, Errors errors) {
+    Optional<UserModel> userModelOptional = userService.findById(userInstructor);
+    if (!userModelOptional.isPresent()) {
+      errors.rejectValue("userInstructor", "UserInstructorError",
+          "Instructor not found.");
+    }
+    if (userModelOptional.get().getUserType().equals(UserType.STUDENT.toString())) {
+      errors.rejectValue("userInstructor", "UserInstructorError",
+            "User must be INSTRUCTOR or ADMIN.");
+    }
 
 //    ResponseEntity<UserDto> responseUserInstructor;
 //    try {

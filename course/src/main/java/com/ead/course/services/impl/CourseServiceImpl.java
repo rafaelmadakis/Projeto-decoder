@@ -37,18 +37,17 @@ public class CourseServiceImpl implements CourseService {
   @Transactional
   @Override
   public void delete(CourseModel courseModel) {
-    List<ModuleModel> moduleModelList = moduleRepository.findAllLModulesIntoCourse(
-        courseModel.getCourseId());
-    if (!moduleModelList.isEmpty()) {
-      for (ModuleModel module : moduleModelList) {
-        List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(
-            module.getModuleId());
-        if (!lessonModelList.isEmpty()) {
+    List<ModuleModel> moduleModelList = moduleRepository.findAllLModulesIntoCourse(courseModel.getCourseId());
+    if (!moduleModelList.isEmpty()){
+      for(ModuleModel module : moduleModelList){
+        List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
+        if (!lessonModelList.isEmpty()){
           lessonRepository.deleteAll(lessonModelList);
         }
       }
       moduleRepository.deleteAll(moduleModelList);
     }
+    courseRepository.deleteCourseUserByCourse(courseModel.getCourseId());
     courseRepository.delete(courseModel);
   }
 
@@ -65,5 +64,16 @@ public class CourseServiceImpl implements CourseService {
   @Override
   public Page<CourseModel> findAll(Specification<CourseModel> spec, Pageable pageable) {
     return courseRepository.findAll(spec, pageable);
+  }
+
+  @Override
+  public boolean existsByCourseAndUser(UUID courseId, UUID userId) {
+    return courseRepository.existsByCourseAndUser(courseId, userId);
+  }
+
+  @Transactional
+  @Override
+  public void saveSubscriptionUserInCourse(UUID courseId, UUID userId) {
+    courseRepository.saveCourseUser(courseId, userId);
   }
 }

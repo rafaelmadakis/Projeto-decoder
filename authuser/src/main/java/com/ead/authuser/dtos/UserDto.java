@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.Data;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @JsonInclude(Include.NON_NULL)
@@ -58,6 +59,7 @@ public class UserDto {
   private String phoneNumber;
 
 
+  @CPF(groups = {UserView.RegistrationPost.class, UserView.UserPut.class})
   @JsonView({UserView.RegistrationPost.class, UserView.UserPut.class})
   private String cpf;
 

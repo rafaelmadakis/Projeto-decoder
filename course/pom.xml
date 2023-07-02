@@ -39,6 +39,11 @@
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+
 
   <!-- https://mvnrepository.com/artifact/net.kaczmarzyk/specification-arg-resolver -->
   <dependency>
@@ -52,7 +57,7 @@
     <artifactId>spring-boot-starter-validation</artifactId>
   </dependency>
 
-  <dependency>
+    <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
     <scope>runtime</scope>
