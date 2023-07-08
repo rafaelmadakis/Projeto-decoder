@@ -1,6 +1,8 @@
 package com.ead.course.services;
 
 import com.ead.course.models.CourseModel;
+import com.ead.course.models.UserModel;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -21,4 +23,7 @@ public interface CourseService {
   boolean existsByCourseAndUser(UUID courseId, UUID userId);
 
   void saveSubscriptionUserInCourse(UUID courseId, UUID userId);
+
+  @Transactional
+  void saveSubscriptionUserInCourseAndSendNotification(CourseModel course, UserModel user);
 }
