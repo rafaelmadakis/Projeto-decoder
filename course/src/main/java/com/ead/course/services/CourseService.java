@@ -24,6 +24,6 @@ public interface CourseService {
 
   void saveSubscriptionUserInCourse(UUID courseId, UUID userId);
 
-  @Transactional
+
   void saveSubscriptionUserInCourseAndSendNotification(CourseModel course, UserModel user);
 }

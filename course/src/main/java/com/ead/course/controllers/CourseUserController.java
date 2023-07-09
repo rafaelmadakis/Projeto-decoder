@@ -71,7 +71,9 @@ public class CourseUserController {
 //        userModelOptional.get().getUserId());
 //    return ResponseEntity.status(HttpStatus.CREATED).body("Subscription created successfully.");
 
-    courseService.saveSubscriptionUserInCourseAndSendNotification(courseModelOptional.get(), userModelOptional.get());
+    courseService.saveSubscriptionUserInCourseAndSendNotification(courseModelOptional.get(),
+        userModelOptional.get());
+
     return ResponseEntity.status(HttpStatus.CREATED).body("Subscription created successfully.");
   }
 }
