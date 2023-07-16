@@ -1,67 +1,69 @@
-server:
-  port: 8087
-  servlet:
-    context-path: '/ead-authuser/'
+#server:
+#  port: 8087
+#  servlet:
+#    context-path: '/ead-authuser/'
 spring:
   application:
     name: ead-authuser-service
   config:
-    import: 'optional:configserver:'
+    import: 'configserver:'
   cloud:
     config:
       discovery:
         serviceId: ead-config-server
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
-    username: postgres
-    password: 
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      jdbc:
-        lob.non-contextual-creation: true
-    properties:
-      hibernate:
-        show_sql: true
-  rabbitmq:
-    addresses: amqps://prwrqfsj:9VCZnD0LezItPJyoZwKzDGBF0xSkBX5_@chimpanzee.rmq.cloudamqp.com/prwrqfsj
-
-logging:
-  level:
-    com.ead: TRACE
-    root: INFO
-    org.springframework.web: DEBUG
-    org.hibernate: INFO
-
-ead:
-  api:
-    url:
-      course: 'http://ead-course-service/ead-course'
-  broker:
-    exchange:
-      userEvent: ead.userevent
-
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: 'http://localhost:8761/eureka'
-  instance:
-    hostname: localhost
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      circuitbreakerInstance:
-        slidingWindowSize: 30
-        permittedNumberIfCallsInHalfOpenState: 2
-        slidingWindowType: TIME_BASED
-        minimumNumberOfCalls: 2
-        waitDurationInOpenState: 30s
-        failureRateThreshold: 80
-  retry:
-    instances:
-      retryInstance:
-        maxAttempts: 3
-        waitDuration: 5s
+      username: configserver
+      password: 'ead123cs'
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
+#    username: postgres
+#    password:
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      dialect: org.hibernate.dialect.PostgreSQLDialect
+#      jdbc:
+#        lob.non-contextual-creation: true
+#    properties:
+#      hibernate:
+#        show_sql: true
+#  rabbitmq:
+#    addresses: amqps://prwrqfsj:9VCZnD0LezItPJyoZwKzDGBF0xSkBX5_@chimpanzee.rmq.cloudamqp.com/prwrqfsj
+#
+#logging:
+#  level:
+#    com.ead: TRACE
+#    root: INFO
+#    org.springframework.web: DEBUG
+#    org.hibernate: INFO
+#
+#ead:
+#  api:
+#    url:
+#      course: 'http://ead-course-service/ead-course'
+#  broker:
+#    exchange:
+#      userEvent: ead.userevent
+#
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: 'http://localhost:8761/eureka'
+#  instance:
+#    hostname: localhost
+#
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      circuitbreakerInstance:
+#        slidingWindowSize: 30
+#        permittedNumberIfCallsInHalfOpenState: 2
+#        slidingWindowType: TIME_BASED
+#        minimumNumberOfCalls: 2
+#        waitDurationInOpenState: 30s
+#        failureRateThreshold: 80
+#  retry:
+#    instances:
+#      retryInstance:
+#        maxAttempts: 3
+#        waitDuration: 5s
