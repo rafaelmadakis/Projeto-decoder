@@ -1,0 +1,19 @@
+server:
+  port: ${PORT}
+
+
+
+ead:
+  serviceRegistry:
+    username: ${EUREKA_USERNAME}
+    password: ${EUREKA_PASSWORD}
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
+  instance:
+    hostname: ${APP_DOMAIN_NAME}
+    nonSecurePort: 80
