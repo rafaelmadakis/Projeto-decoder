@@ -1,9 +1,8 @@
-package com.ead.authuser.configs.security;
+package com.ead.notification.configs.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,9 +33,6 @@ public class WebSecurityConfig {
   @Autowired
   private AuthenticationConfiguration authenticationConfiguration;
 
-  private static final String[] AUTH_WHITELIST = {
-      "/auth/**"
-  };
 
   @Bean
   public AuthenticationJwtFilter authenticationJwtFilter() {
@@ -51,6 +47,7 @@ public class WebSecurityConfig {
     roleHierarchy.setHierarchy(hierarchy);
     return roleHierarchy;
   }
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
@@ -59,7 +56,7 @@ public class WebSecurityConfig {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeHttpRequests()
-        .requestMatchers(AUTH_WHITELIST).permitAll()
+
         .anyRequest().authenticated()
         .and()
         .csrf().disable();
@@ -69,11 +66,10 @@ public class WebSecurityConfig {
   }
 
 
-
-  @Bean
-  public AuthenticationManager authenticationManager() throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-  }
+//  @Bean
+//  public AuthenticationManager authenticationManager() throws Exception {
+//    return authenticationConfiguration.getAuthenticationManager();
+//  }
 
 //  @Bean
 //  public UserDetailsService userDetailsService() {
@@ -83,15 +79,15 @@ public class WebSecurityConfig {
 //        .build();
 //    return new InMemoryUserDetailsManager(user);
 //  }
-
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService)
-        .passwordEncoder(passwordEncoder());
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+//
+//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    auth.userDetailsService(userDetailsService)
+//        .passwordEncoder(passwordEncoder());
+//  }
+//
+//  @Bean
+//  public PasswordEncoder passwordEncoder() {
+//    return new BCryptPasswordEncoder();
+//  }
 
 }

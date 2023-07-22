@@ -22,7 +22,7 @@ spring:
 ead:
   serviceRegistry:
     username: serviceRegistry
-    password:
+    password: 'ead123sr'
 
 eureka:
   client:

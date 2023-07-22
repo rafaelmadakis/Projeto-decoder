@@ -11,14 +11,14 @@ spring:
           uri: https://github.com/rafaelmadakis/ead-config-server-repo
           defaultLabel: main
           username: rafaelmadakis
-          password:
+          password: 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
 ead:
   configServer:
     username: configserver
-    password:
+    password: 'ead123cs'
   serviceRegistry:
     username: serviceRegistry
-    password:
+    password: 'ead123sr'
 
 eureka:
   client:
